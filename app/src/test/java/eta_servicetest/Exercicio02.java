@@ -4,13 +4,15 @@ import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
 
-public class Exercicio01 {
+public class Exercicio02 {
 
     private Usuario usuario;
 
+    private Login login;
+
     private Faker faker;
 
-    public Exercicio01() {
+    public Exercicio02() {
     }
 
     @Before
@@ -20,6 +22,7 @@ public class Exercicio01 {
         String email = faker.internet().emailAddress();
         String password = faker.internet().password();
         usuario = new Usuario(userName, email, password, "true");
+        login = new Login(email, password);
     }
 
     @Test
@@ -27,6 +30,8 @@ public class Exercicio01 {
         usuario.listUsuarios();
         String userID = usuario.cadastrarUsuario(usuario);
         usuario.listarUsuarioPorID(userID);
+        usuario.validarCadastrarUsuarioRepetido(usuario);
+        login.efetuarLogin(login);
         usuario.deletarUsuario(userID);
     }
 }

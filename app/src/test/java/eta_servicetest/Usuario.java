@@ -48,6 +48,24 @@ public class Usuario {
         return userID;
     }
 
+    public String validarCadastrarUsuarioRepetido(Usuario usuario){
+        String userID = given()
+                .body("{\n" +
+                        "  \"nome\": \"" + usuario.nome + "\",\n" +
+                        "  \"email\": \"" + usuario.email + "\",\n" +
+                        "  \"password\": \"" + usuario.password + "\",\n" +
+                        "  \"administrador\": \"" + usuario.administrador + "\"\n" +
+                        "}")
+                .contentType("application/json")
+                .when()
+                .post("http://localhost:3000/usuarios")
+                .then()
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .body("message", is("Este email já está sendo usado"))
+                .extract().path("_id");
+        return userID;
+    }
+
     public void listarUsuarioPorID(String userID){
         given()
                 .pathParam("_id", userID)
@@ -68,19 +86,17 @@ public class Usuario {
                 .body("message", is("Registro excluído com sucesso"));
     }
 
-    public void editarUsuario(String userID, Usuario usuario, Boolean exists){
+    public void validarDeletarUsuarioComCarrinho(String userID){
+        given()
+                .pathParam("_id", userID)
+                .when()
+                .delete("http://localhost:3000/usuarios/{_id}")
+                .then()
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .body("message", is("Não é permitido excluir usuário com carrinho cadastrado"));
+    }
 
-        String message;
-        Integer statusCode;
-
-        if (exists){
-            statusCode = HttpStatus.SC_OK;
-            message = "Registro alterado com sucesso";
-        }
-        else{
-            statusCode = HttpStatus.SC_CREATED;
-            message = "Cadastro realizado com sucesso";
-        }
+    public void editarUsuarioExistente(String userID, Usuario usuario, Boolean exists){
         given()
                 .pathParam("_id", userID)
                 .body("{\n" +
@@ -92,8 +108,24 @@ public class Usuario {
         .when()
                 .put("http://localhost:3000/usuarios/{_id}")
         .then()
-                .statusCode(statusCode)
-                .body("message", is(message));
+                .statusCode(HttpStatus.SC_OK)
+                .body("message", is("Registro alterado com sucesso"));
+    }
+
+    public void editarUsuarioInexistente(String userID, Usuario usuario, Boolean exists){
+        given()
+                .pathParam("_id", userID)
+                .body("{\n" +
+                        "  \"nome\": \"" + usuario.nome + "\",\n" +
+                        "  \"email\": \"" + usuario.email + "\",\n" +
+                        "  \"password\": \"" + usuario.password + "\",\n" +
+                        "  \"administrador\": \"" + usuario.administrador + "\"\n" +
+                        "}")
+                .when()
+                .put("http://localhost:3000/usuarios/{_id}")
+                .then()
+                .statusCode(HttpStatus.SC_CREATED)
+                .body("message", is("Cadastro realizado com sucesso"));
     }
 
 }

@@ -22,12 +22,12 @@ public class Login {
                         "    \"email\": \"" + login.email + "\",\n" +
                         "    \"password\": \"" + login.password + "\"\n" +
                         "}")
-                .contentType("application/type")
+                .contentType("application/json")
        .when()
                 .post("http://localhost:3000/login")
       .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body("meesage", is("Login realizado com sucesso"))
+                .body("message", is("Login realizado com sucesso"))
                 .extract().path("authorization");
         return userToken;
 

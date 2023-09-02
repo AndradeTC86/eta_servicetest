@@ -22,7 +22,7 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public String cadastratProduto(Produto produto, String userToken){
+    public String cadastrarProduto(Produto produto, String userToken){
         String productID = given()
                 .header("authorization", userToken)
                 .body("{\n" +
@@ -41,13 +41,14 @@ public class Produto {
         return  productID;
     }
 
-    public void listarProdutoPorID(String productID){
+    public void listarProdutoPorID(String productID, Integer quantidade){
         given()
                 .pathParam("_id", productID)
        .when()
                 .get("http://localhost:3000/produtos/{_id}")
       .then()
                 .statusCode(HttpStatus.SC_OK)
+                .body("quantidade", is(quantidade))
                 .body("_id", is(productID));
     }
 
@@ -59,6 +60,6 @@ public class Produto {
                 .delete("http://localhost:3000/produtos/{_id}")
       .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body("message", is("Registro excluÃ­do com sucesso"));
+                .body("message", is("Registro excluído com sucesso"));
     }
 }
