@@ -4,7 +4,7 @@ Repositório da aula de Teste de Serviços da especialização em Testes Ágeis 
 # Executando esse projeto
 Esse projeto Rest Assured utiliza o Serverest para executar os seus testes.
 
-Para inicial o Serverest localmente, utilize o comando abaixo:
+Para iniciar o Serverest localmente, utilize o comando abaixo:
 
 ```
 npx serverest@latest
