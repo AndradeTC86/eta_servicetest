@@ -27,16 +27,17 @@ public class Usuario {
         when().
                 get("http://localhost:3000/usuarios")
         .then()
-                .statusCode(HttpStatus.SC_OK)
+                .statusCode(HttpStatus.SC_OK);
     }
 
     public String cadastrarUsuario(Usuario usuario){
-        String userID = given().body("{\n" +
-                "  \"nome\": \"" + usuario.nome + "\",\n" +
-                "  \"email\": \"" + usuario.email + "\",\n" +
-                "  \"password\": \"" + usuario.password + "\",\n" +
-                "  \"administrador\": \"" + usuario.administrador + "\"\n" +
-                "}")
+        String userID = given()
+                .body("{\n" +
+                      "  \"nome\": \"" + usuario.nome + "\",\n" +
+                      "  \"email\": \"" + usuario.email + "\",\n" +
+                      "  \"password\": \"" + usuario.password + "\",\n" +
+                      "  \"administrador\": \"" + usuario.administrador + "\"\n" +
+                      "}")
                 .contentType("application/json")
         .when()
                 .post("http://localhost:3000/usuarios")
@@ -69,8 +70,8 @@ public class Usuario {
 
     public void editarUsuario(String userID, Usuario usuario, Boolean exists){
 
-        private String message;
-        private HttpStatus statusCode;
+        String message;
+        Integer statusCode;
 
         if (exists){
             statusCode = HttpStatus.SC_OK;
@@ -91,7 +92,7 @@ public class Usuario {
         .when()
                 .put("http://localhost:3000/usuarios/{_id}")
         .then()
-                .statusCode(is(statusCode))
+                .statusCode(statusCode)
                 .body("message", is(message));
     }
 

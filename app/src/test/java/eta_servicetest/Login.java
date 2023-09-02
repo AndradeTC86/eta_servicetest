@@ -1,0 +1,35 @@
+package eta_servicetest;
+
+import org.apache.http.HttpStatus;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.is;
+
+public class Login {
+
+    private String email;
+
+    private String password;
+
+    public Login(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public String efetuarLogin(Login login){
+        String userToken = given()
+                .body("{\n" +
+                        "    \"email\": \"" + login.email + "\",\n" +
+                        "    \"password\": \"" + login.password + "\"\n" +
+                        "}")
+                .contentType("application/type")
+       .when()
+                .post("http://localhost:3000/login")
+      .then()
+                .statusCode(HttpStatus.SC_OK)
+                .body("meesage", is("Login realizado com sucesso"))
+                .extract().path("authorization");
+        return userToken;
+
+    }
+}
