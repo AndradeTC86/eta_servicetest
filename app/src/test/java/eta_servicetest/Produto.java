@@ -60,6 +60,6 @@ public class Produto {
                 .delete("http://localhost:3000/produtos/{_id}")
       .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body("message", is("Registro excluído com sucesso"));
+                .body("message", is("Registro excluÃ­do com sucesso"));
     }
 }

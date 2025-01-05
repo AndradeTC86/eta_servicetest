@@ -46,6 +46,6 @@ public class Carrinho {
                 .delete("http://localhost:3000/carrinhos/cancelar-compra")
        .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body("message", is("Registro excluído com sucesso. Estoque dos produtos reabastecido"));
+                .body("message", is("Registro excluÃ­do com sucesso. Estoque dos produtos reabastecido"));
     }
 }

@@ -61,7 +61,7 @@ public class Usuario {
                 .post("http://localhost:3000/usuarios")
                 .then()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .body("message", is("Este email j· est· sendo usado"))
+                .body("message", is("Este email j√° est√° sendo usado"))
                 .extract().path("_id");
         return userID;
     }
@@ -83,7 +83,7 @@ public class Usuario {
                 .delete("http://localhost:3000/usuarios/{_id}")
         .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body("message", is("Registro excluÌdo com sucesso"));
+                .body("message", is("Registro exclu√≠do com sucesso"));
     }
 
     public void validarDeletarUsuarioComCarrinho(String userID){
@@ -93,7 +93,7 @@ public class Usuario {
                 .delete("http://localhost:3000/usuarios/{_id}")
                 .then()
                 .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .body("message", is("N„o È permitido excluir usu·rio com carrinho cadastrado"));
+                .body("message", is("N√£o √© permitido excluir usu√°rio com carrinho cadastrado"));
     }
 
     public void editarUsuarioExistente(String userID, Usuario usuario, Boolean exists){
